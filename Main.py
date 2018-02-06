@@ -22,5 +22,8 @@ def A1() :
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+def A2() :
 
-A1()
+
+    
+A2()
