@@ -56,16 +56,38 @@ def A3() :
 
     for i in range(0, isize[0]):
         for j in range (0, isize[1]):
-                if img[i][j] > 180 :
+                if img[i][j] < 180 :
                     img[i][j] = 0
                 else :
                     img[i][j] = 255
-                
+
     cv2.imshow('image', img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 def A4() :
-
     
+    # Blending
+
+    img = cv2.imread('images/A4.pbm', 0)
+    img1 = cv2.imread('images/A4bis.pbm', 0)
+
+    isize = img.shape
+    isize1 = img1.shape
+    px1 = 0
+    px2 = 0
+    px = 0
+
+    for i in range(0, isize[0]):
+        for j in range (0, isize[1]):
+            px1 = img[i][j]
+            px2 = img1[i][j]
+            px = min(px1, px2)
+            img[i][j] = px
+
+    cv2.imshow('image', img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
 A4()
