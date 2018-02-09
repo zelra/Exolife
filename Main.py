@@ -67,7 +67,7 @@ def A3() :
 
 def A4() :
     
-    # Blending
+    # Blending, opening, closing
 
     img = cv2.imread('images/A4.pbm', 0)
     img1 = cv2.imread('images/A4bis.pbm', 0)
@@ -82,13 +82,31 @@ def A4() :
         for j in range (0, isize[1]):
             px1 = img[i][j]
             px2 = img1[i][j]
-            px = min(px1, px2)
-            img[i][j] = px
+            img[i][j] = min(px1, px2)
 
-    cv2.imshow('image', img)
+    kernel = np.ones((2, 2), np.uint8)
+    opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+
+
+    cv2.imshow('image', closing)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 def B1() :
 
-B1()
+# Egalisation, normalization
+    img = cv2.imread('images/B1.pbm', 0)
+
+    imgE = cv2.equalizeHist(img)
+
+    b = cv2.normalize(imgE, imgE, 0, 255, cv2.NORM_MINMAX )
+
+    cv2.imshow('image', imgE)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+def B2() :
+
+
+B2()
