@@ -89,5 +89,6 @@ def A4() :
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+def B1() :
 
-A4()
+B1()
