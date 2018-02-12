@@ -120,4 +120,7 @@ def B2() :
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-B2()
+
+def B3() :
+
+B3()
