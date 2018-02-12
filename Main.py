@@ -52,16 +52,11 @@ def A2() :
 def A3() :
 
     img = cv2.imread('images/A3.pbm', 0)
-    isize = img.shape
 
-    for i in range(0, isize[0]):
-        for j in range (0, isize[1]):
-                if img[i][j] < 180 :
-                    img[i][j] = 0
-                else :
-                    img[i][j] = 255
 
-    cv2.imshow('image', img)
+    img1 =  cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,11,2 )
+
+    cv2.imshow('image', img1)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
@@ -107,6 +102,22 @@ def B1() :
     cv2.destroyAllWindows()
 
 def B2() :
+# Normalisation implémenté dans l'égalisation
 
+    img = cv2.imread('images/B2.pbm', 0)
+
+    kernel = np.ones((5, 5), np.uint8)
+
+    b = cv2.normalize(img, img, 0, 255, cv2.NORM_MINMAX)
+    closing = cv2.morphologyEx(b, cv2.MORPH_HITMISS, kernel)
+    c = cv2.normalize(closing, closing, 0, 255, cv2.NORM_MINMAX)
+    opening = cv2.morphologyEx(c, cv2.MORPH_CLOSE, kernel)
+#    blur = cv2.bilateralFilter(opening,9,75,5)
+#    cv2.threshold(opening, 50, 255, cv2.THRESH_BINARY , opening)
+#    median = cv2.medianBlur(opening,5)
+
+    cv2.imshow('image', opening)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 B2()
