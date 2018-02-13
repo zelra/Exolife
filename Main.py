@@ -183,4 +183,10 @@ def X1() :
     plt.title('Output Image'), plt.xticks([]), plt.yticks([])
     plt.show()
 
-X1()
+
+def X2() :
+
+
+
+    
+X2()
