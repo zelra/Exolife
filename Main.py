@@ -120,4 +120,41 @@ def B2() :
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-B2()
+
+def B3() :
+    #Multi-tresholding
+    img = cv2.imread('images/B3.pbm', 1)
+    imgG = cv2.imread('images/B3.pbm', 0)
+    isize = img.shape
+
+    maxi = 0
+    min = 0
+    moyenne = 0
+    buffer = 0
+    for i in range(0, isize[0]):
+        for j in range(0, isize[1]):
+            if imgG[i][j] > maxi:
+                maxi = imgG[i][j]
+            if imgG[i][j] < min:
+                min = imgG[i][j]
+#            buffer = buffer + imgG[i][j]
+#    moyenne = buffer/(isize[0]* isize[1])
+    moyenne = (maxi + min)/2
+    print (min ,(min + moyenne)/2 ,moyenne, (maxi + moyenne)/2, maxi)
+
+    for i in range(0, isize[0]):
+        for j in range(0, isize[1]):
+            if (imgG[i][j] < (min + moyenne)/2) :
+                img[i][j] = [0, 0, 0]
+            elif (imgG[i][j] > (min + moyenne)/2 and imgG[i][j] < moyenne) :
+                img[i][j] = [0, 0, 255]
+            elif (imgG[i][j] > moyenne and imgG[i][j] < (maxi + moyenne)/2) :
+                img[i][j] = [0, 255, 0]
+            elif (imgG[i][j] > (maxi + moyenne)/2 and imgG[i][j] < maxi) :
+                img[i][j] = [255, 0, 0]
+
+    cv2.imshow('image', img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+B3()
