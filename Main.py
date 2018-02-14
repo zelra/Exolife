@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
+import imutils
 from numpy import vectorize
 from numpy.lib.tests.test__datasource import valid_baseurl
 
@@ -224,5 +225,31 @@ def U1() :
 
 def U2() :
 
+    img = cv2.imread('images/U2.pbm')
+    igmG = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+    edges = cv2.Canny(img, 100, 200)
+
+    contours = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours = contours[0] if imutils.is_cv2() else contours[1]
+
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
+
+    cv2.drawContours(img, contours, 0, (0, 255, 0), 2)
+
+    cv2.imshow('image', img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+'''
+    plt.subplot(141), plt.imshow(img, cmap='gray')
+    plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+    plt.subplot(142), plt.imshow(edges, cmap='gray')
+    plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
+    plt.subplot(143), plt.imshow(contours, cmap='gray')
+    plt.title('Contours Image'), plt.xticks([]), plt.yticks([])
+
+    plt.show()
+'''
 U2()
+
