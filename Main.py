@@ -222,4 +222,7 @@ def U1() :
 
     plt.show()
 
-U1()
+def U2() :
+
+
+U2()
