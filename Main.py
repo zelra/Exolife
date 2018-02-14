@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from matplotlib import pyplot as plt
 from numpy import vectorize
 from numpy.lib.tests.test__datasource import valid_baseurl
 
@@ -160,10 +161,6 @@ def B3() :
 
 def X1() :
 
-    import cv2
-    import numpy as np
-    from matplotlib import pyplot as plt
-
     img = cv2.imread('images/X1.jpg', 0)
     f = np.fft.fft2(img)
     fshift = np.fft.fftshift(f)
@@ -183,4 +180,23 @@ def X1() :
     plt.title('Output Image'), plt.xticks([]), plt.yticks([])
     plt.show()
 
-X1()
+
+def X2() :
+    #dct (demandé par david), mediant blurs
+
+    img = cv2.imread('images/X2.pbm', 0)
+#    imf = np.float32(img) / 255.0  # float conversion/scale
+
+    median = cv2.medianBlur(img,3)
+    median1 = cv2.medianBlur(median, 3)
+    
+#    test = cv2.medianBlur(median, 3)
+#    dst = cv2.dct(median)  # the dct
+#    final = cv2.idct(dst)   # convert back
+
+    cv2.imshow('image', median1)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+X2()
