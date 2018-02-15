@@ -53,6 +53,8 @@ def A2() :
 
 def A3() :
 
+    # Adaptative treshold
+
     img = cv2.imread('images/A3.pbm', 0)
 
 
@@ -93,38 +95,42 @@ def A4() :
 def B1() :
 
 # Egalisation, normalization
+
     img = cv2.imread('images/B1.pbm', 0)
 
     imgE = cv2.equalizeHist(img)
 
-    b = cv2.normalize(imgE, imgE, 0, 255, cv2.NORM_MINMAX )
+#    b = cv2.normalize(imgE, imgE, 0, 255, cv2.NORM_MINMAX )
+    # Normalisation implémentée dans l'égalisation
 
     cv2.imshow('image', imgE)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 def B2() :
-# Normalisation implémenté dans l'égalisation
+
+    #Normalisation x2 + hitmiss et closing
 
     img = cv2.imread('images/B2.pbm', 0)
 
     kernel = np.ones((5, 5), np.uint8)
 
     b = cv2.normalize(img, img, 0, 255, cv2.NORM_MINMAX)
-    closing = cv2.morphologyEx(b, cv2.MORPH_HITMISS, kernel)
-    c = cv2.normalize(closing, closing, 0, 255, cv2.NORM_MINMAX)
-    opening = cv2.morphologyEx(c, cv2.MORPH_CLOSE, kernel)
+    hitmiss = cv2.morphologyEx(b, cv2.MORPH_HITMISS, kernel)
+    c = cv2.normalize(hitmiss, hitmiss, 0, 255, cv2.NORM_MINMAX)
+    closing = cv2.morphologyEx(c, cv2.MORPH_CLOSE, kernel)
 #    blur = cv2.bilateralFilter(opening,9,75,5)
 #    cv2.threshold(opening, 50, 255, cv2.THRESH_BINARY , opening)
 #    median = cv2.medianBlur(opening,5)
 
-    cv2.imshow('image', opening)
+    cv2.imshow('image', closing)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 
 def B3() :
     #Multi-tresholding
+
     img = cv2.imread('images/B3.pbm', 1)
     imgG = cv2.imread('images/B3.pbm', 0)
     isize = img.shape
@@ -132,15 +138,17 @@ def B3() :
     maxi = 0
     min = 0
     moyenne = 0
-    buffer = 0
+#    buffer = 0
     for i in range(0, isize[0]):
         for j in range(0, isize[1]):
             if imgG[i][j] > maxi:
                 maxi = imgG[i][j]
             if imgG[i][j] < min:
                 min = imgG[i][j]
+
 #            buffer = buffer + imgG[i][j]
 #    moyenne = buffer/(isize[0]* isize[1])
+
     moyenne = (maxi + min)/2
     print (min ,(min + moyenne)/2 ,moyenne, (maxi + moyenne)/2, maxi)
 
@@ -161,6 +169,8 @@ def B3() :
 
 
 def X1() :
+
+    # Transformée de Fourier (et inverse)
 
     img = cv2.imread('images/X1.jpg', 0)
     f = np.fft.fft2(img)
@@ -183,7 +193,7 @@ def X1() :
 
 
 def X2() :
-    #dct (demandé par david), mediant blurs
+    #transformée en cosinus discrète (demandé par david), mediant blurs
 
     img = cv2.imread('images/X2.pbm', 0)
 #    imf = np.float32(img) / 255.0  # float conversion/scale
@@ -200,6 +210,8 @@ def X2() :
     cv2.destroyAllWindows()
 
 def U1() :
+
+    #Sobel XY
 
     img = cv2.imread('images/U1.pbm', 0)
 
@@ -225,6 +237,8 @@ def U1() :
 
 def U2() :
 
+    # Canny
+
     img = cv2.imread('images/U2.pbm')
     igmG = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -235,21 +249,12 @@ def U2() :
 
     contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
 
-    cv2.drawContours(img, contours, 0, (0, 255, 0), 2)
+    cv2.drawContours(img, contours, 0, (0, 0, 255), -1)
 
     cv2.imshow('image', img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-'''
-    plt.subplot(141), plt.imshow(img, cmap='gray')
-    plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-    plt.subplot(142), plt.imshow(edges, cmap='gray')
-    plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
-    plt.subplot(143), plt.imshow(contours, cmap='gray')
-    plt.title('Contours Image'), plt.xticks([]), plt.yticks([])
 
-    plt.show()
-'''
 U2()
 
